@@ -22,7 +22,7 @@
         /* PAGE STYLES BELOW */
 
         body {
-            background-color: #aaa;
+            background-color: #444;
         }
 
         /* PAGE STYLES ABOVE */
@@ -46,9 +46,8 @@
         #input_contain {
             position: fixed;
             z-index: 1;
-            top: 40px;
+            top: 44px;
             height: 40px;
-            /* padding: 5px; */
             /* background-color: rgba(255, 255, 255, 1); */
         }
 
@@ -90,10 +89,11 @@
             height: 15px;
             background-color: rgba(222, 222, 222, 1);
         }
-        /* RESPONSIVE CONTAINER STYLES BELOW */
+        /* RESPONSIVE CONTAINER STYLES ABOVE */
 
 
         /* CONTENT HOLDER STYLES BELOW */
+
         .card {
             border: 0px;
         }
@@ -137,19 +137,31 @@
         }
         /* CONTENT HOLDER STYLES ABOVE */
         /* Extra small devices (phones, 600px and down) */
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 575px) {
             #gif_contain {
                 width: 60%;
                 }
              } 
         /* Small devices (portrait tablets and large phones, 600px and up) */
-        @media only screen and (min-width: 600px) {
+        @media only screen and (min-width: 576px) {
+            #gif_contain {
+                width: 70%;
+                }
+            .card-columns {
+                column-count: 2;
+                }
              } 
         /* Medium devices (landscape tablets, 768px and up) */
         @media only screen and (min-width: 768px) {
              } 
         /* Large devices (laptops/desktops, 992px and up) */
         @media only screen and (min-width: 992px) {
+            #gif_contain {
+                width: 80%;
+                }
+            .card-columns {
+                column-count: 3;
+                }
              } 
         /* Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
