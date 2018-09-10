@@ -44,10 +44,13 @@
         }
 
         #gif_contain {
+            padding-top: 90px;
             height: 100vh;
-            /* max-width: 100%; */
+            width: 60%;
             float: left;
             background-color: rgba(207, 220, 230, 1);
+            /* overflow: scroll; */
+            /* display: table;  */
         }
 
         #button_contain {
@@ -55,7 +58,7 @@
             padding-left: 10px;
             padding-right: 5px;
             height: 100vh;
-            /* width: 40%; */
+            width: 40%;
             float: right;
             background-color: rgba(223, 230, 207, 1);
             overflow: hidden;
@@ -73,6 +76,11 @@
 
         /* CONTENT HOLDER STYLES BELOW */
 
+        .card-columns {
+            /* max-width: 90%; */
+        }
+        
+        
         #input_box {
             margin: 5px auto;
             max-width: 235px;
@@ -85,13 +93,14 @@
         }
 
         .cat_button  {
-            margin: 5px;
+            margin: 4px;
             float: left;
             clear: both;
             max-width: 90%;
             overflow: hidden;
             background-color: #999;
             border: 0px solid black;
+            padding: 1px 7px;
 
         }
 
@@ -99,6 +108,24 @@
             font-size: .8rem;
             font-family: 'Unica One', cursive;
             letter-spacing: .03rem;
+        }
+
+        .gif_title {
+            font-size: 1rem;
+            font-family: 'Unica One', cursive;
+            padding: 1px 10px;
+            color: #333;
+            background-color: #eee;
+
+        }
+
+        .gif_maker {
+            font-size: .6rem;
+            font-family: 'Unica One', cursive;
+            padding: 1px 10px;
+            color: #ddd;
+            background-color: #888;
+
         }
 
 
@@ -134,17 +161,83 @@
     <header id="head_contain" class="container-fluid">GIFTASTIC</header>
 
     <section id="input_contain" class="container-fluid">
-
         <div id="input_box" class="input-group input-group-sm mb-3">
             <input type="text" class="form-control" placeholder="make a new category" aria-label="make a new category" aria-describedby="button-addon2">
             <div class="input-group-append">
                 <button id="addit_btn" class="btn btn-secondary" type="button" id="button-addon2">add it!</button>
             </div>
         </div>
-
     </section>
 
-    <main id="gif_contain"></main>
+
+
+
+
+    <main id="gif_contain" class="container">
+
+
+        <div class="card-columns">
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-2.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-3.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-4.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-5.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="assets/images/husky-6.gif" alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="gif_title list-group-item">title of this gif</li>
+                    <li class="gif_maker list-group-item">by: The Gifinator</li>
+                </ul>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </main>
 
     <aside id="button_contain">
 
