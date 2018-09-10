@@ -28,16 +28,19 @@
             height: 40px;
             padding-top: 10px;
             font-family: 'Chango', cursive;
-            letter-spacing: .7rem;
+            color: #ddd;
+            letter-spacing: .9rem;
+            text-indent: .9rem;
             text-align: center;
-            background-color: rgba(222, 222, 222, 1);
+            background-color: rgba(111, 111, 111, 1);
         }
 
         #input_contain {
             position: fixed;
             top: 40px;
             height: 40px;
-            background-color: rgba(222, 179, 179, 1);
+            /* padding: 5px; */
+            background-color: rgba(255, 255, 255, 1);
         }
 
         #gif_contain {
@@ -62,20 +65,34 @@
         #foot_contain {
             position: fixed;
             bottom: 0;
-            height: 40px;
-            background-color: rgba(218, 193, 227, 1);
+            height: 15px;
+            background-color: rgba(222, 222, 222, 1);
         }
 
         /* RESPONSIVE CONTAINER STYLES BELOW */
 
         /* CONTENT HOLDER STYLES BELOW */
 
-        button {
+        #input_box {
+            margin: 5px auto;
+            max-width: 235px;
+        }
+
+        #addit_btn {
+            background-color: #999;
+            border: 0px solid black;
+
+        }
+
+        .cat_button  {
             margin: 5px;
             float: left;
             clear: both;
             max-width: 90%;
             overflow: hidden;
+            background-color: #999;
+            border: 0px solid black;
+
         }
 
         .button_type {
@@ -90,28 +107,23 @@
 
         /* Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
-            ...
-            } 
+             } 
 
         /* Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
-            ...
-            } 
+             } 
 
         /* Medium devices (landscape tablets, 768px and up) */
         @media only screen and (min-width: 768px) {
-            ...
-            } 
+             } 
 
         /* Large devices (laptops/desktops, 992px and up) */
         @media only screen and (min-width: 992px) {
-            ...
-            } 
+             } 
 
         /* Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
-            ...
-            }
+             }
 
 
     </style>
@@ -119,42 +131,46 @@
 
 <body>
 
-    <header id="head_contain" class="container-fluid">
-        GIFTASTIC
-    </header>
+    <header id="head_contain" class="container-fluid">GIFTASTIC</header>
 
-    <section id="input_contain" class="container-fluid"></section>
+    <section id="input_contain" class="container-fluid">
+
+        <div id="input_box" class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="make a new category" aria-label="make a new category" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button id="addit_btn" class="btn btn-secondary" type="button" id="button-addon2">add it!</button>
+            </div>
+        </div>
+
+    </section>
 
     <main id="gif_contain"></main>
 
     <aside id="button_contain">
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Siberian Husky</span>
         </button>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Bengal Tiger</span>
         </button>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Cat</span>
         </button>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Monkey</span>
         </button>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Tardigrade</span>
         </button>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="cat_button btn btn-secondary btn-sm">
             <span class="button_type">Ferret</span>
         </button>
-
-
-
 
     </aside>
 
