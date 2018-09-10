@@ -21,15 +21,23 @@
         
         @import url('https://fonts.googleapis.com/css?family=Chango|Unica+One');
 
+        @font-face {
+            font-family: system;
+            font-style: normal;
+            font-weight: 300;
+            src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+        }
+
         /* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
 
 
         /* PAGE STYLES BELOW */
 
         body {
-            /* background-color: #444; */
-            background: linear-gradient(217deg, rgba(183, 197, 208,.1), rgba(183, 197, 208,0) 70.71%), linear-gradient(127deg, rgba(255, 0, 0, 0.1), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.1), rgba(0,0,255,0) 70.71%), #444;
-
+            background-color: #333;
+            /* background: linear-gradient(217deg, rgba(183, 197, 208,.1), rgba(183, 197, 208,0) 70.71%), linear-gradient(127deg, rgba(255, 0, 0, 0.1), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.1), rgba(0,0,255,0) 70.71%), #444;
+            background-size: cover;
+            background-repeat: no-repeat; */
         }
 
         /* PAGE STYLES ABOVE */
@@ -83,6 +91,9 @@
             max-width: 2810px;
             display: flex;
             justify-content: center;
+            /* background: linear-gradient(217deg, rgba(183, 197, 208,.1), rgba(183, 197, 208,0) 70.71%), linear-gradient(127deg, rgba(255, 0, 0, 0.1), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.1), rgba(0,0,255,0) 70.71%), #444; */
+            /* background-size: cover; */
+            /* background-repeat: no-repeat; */
 
         }
 
@@ -122,15 +133,17 @@
 
         .card {
             border: 0px;
-
+            background-color: #222;
         }
                 
         #input_box {
             margin: 5px auto;
             max-width: 205px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+
         }
         #addit_btn {
-            background-color: #999;
+            background: rgba(113, 113, 218, 0.8);
             border: 0px solid black;
         }
         .cat_button  {
@@ -190,28 +203,42 @@
             font-family: 'Unica One', cursive;
             letter-spacing: .03rem;
         }
+
+        .title {
+            float: left;
+        }
+
+        .rating {
+            float: right;
+        }
+
         .gif_title {
             font-size: 1rem;
             font-family: 'Unica One', cursive;
             padding: 1px 10px;
-            color: #333;
-            background-color: #eee;
+            color: #aaa;
+            background-color: #666;
+            text-shadow: 1px 1px 1px #333;
+
         }
+
         .gif_maker {
             font-size: .6rem;
-            font-family: 'Unica One', cursive;
+            font-family: "system";
             padding: 1px 10px;
-            color: #ddd;
-            background-color: #888;
+            color: #777;
+            background-color: #222;
         }
+
         /* CONTENT HOLDER STYLES ABOVE */
-        /* Extra small devices (phones, 600px and down) */
+
+        /* Extra small devices (phones, 575px and down) */
         @media only screen and (max-width: 575px) {
             #gif_contain {
                 width: 60%;
                 }
              } 
-        /* Small devices (portrait tablets and large phones, 600px and up) */
+        /* Small devices (portrait tablets and large phones, 576px and up) */
         @media only screen and (min-width: 576px) {
             #gif_contain {
                 width: 70%;
@@ -265,48 +292,66 @@
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-2.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-3.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-4.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-5.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <img class="card-img-top" src="assets/images/husky-6.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">title of this gif</li>
-                        <li class="gif_maker list-group-item">by: The Gifinator</li>
+                        <li class="gif_title list-group-item">
+                            <span class="title">title of this gif</span>
+                            <span class="rating">PG-13</span>
+                        </li>
+                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
