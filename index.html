@@ -15,6 +15,13 @@
 
     <link rel="stylesheet" href="/assets/styles/styles.css">
 
+    <!-- <script src="/assets/scripts/jquery-3.3.1.min.js"></script> -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
     <style>
 
         /* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
@@ -225,14 +232,6 @@
 
         }
 
-        .gif_maker {
-            font-size: .6rem;
-            font-family: "system";
-            padding: 1px 10px;
-            color: #777;
-            background-color: #222;
-        }
-
         /* CONTENT HOLDER STYLES ABOVE */
 
         /* Extra small devices (phones, 575px and down) */
@@ -275,37 +274,29 @@
         <i id="plus" class="fas fa-plus"></i>
     </header>
 
-
-
     <section id="input_contain" class="container-fluid">
         <div id="input_box" class="input-group input-group-sm mb-3">
-
-            <!-- <form id="new_button" action=""> -->
             <input id="addit_data" type="text" class="form-control" placeholder="make new category">
             <div class="input-group-append">
                 <button id="addit_btn" class="btn btn-secondary" type="submit">add it!</button>
             </div>
-            <!-- </form> -->
-
         </div>
     </section>
-
 
 
     <main>
 
         <article id="gif_contain" class="container-fluid">
 
-            <div class="card-columns">
+            <div id="card_contain" class="card-columns">
 
-                <div class="card">
+                <!-- <div class="card">
                     <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
                     <ul class="list-group list-group-flush">
                         <li class="gif_title list-group-item">
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
@@ -316,7 +307,6 @@
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
@@ -327,7 +317,6 @@
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
@@ -338,7 +327,6 @@
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
@@ -349,7 +337,6 @@
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
                 </div>
 
@@ -360,9 +347,8 @@
                             <span class="title">title of this gif</span>
                             <span class="rating">PG-13</span>
                         </li>
-                        <li class="gif_maker list-group-item">BY: THE GIFINATOR</li>
                     </ul>
-                </div>
+                </div> -->
 
         </article>
 
@@ -377,7 +363,6 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
     <script>
@@ -486,6 +471,79 @@
 
         // ----------------------------------------------------------------
 
+        // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON BELOW
+
+        let queryURL = "";
+
+        let ajaxBuildCards = function () {
+
+            // do a jQuery AJAX call on the constructed queryURL for the button clicked
+            $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                })
+
+                // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
+                .then(function (response) {
+
+                    // loop through each object in the JSON object's "data" array
+                    for (let j = 0; j < data.length; j++) {
+
+                        // imageObject holds each individual image's object from the "data" array
+                        const imageObject = data[j];
+
+                        // function to create a card for each
+                        let cardTemplate = function () {
+                            // Template Literal to create a Boostrap card for each image and append it to #card_contain DIV
+                            $("#card_contain").append(`
+                                <div class="card">
+                                    <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="gif_title list-group-item">
+                                            <span class="title">${imageObject.title}</span>
+                                            <span class="rating">${imageObject.rating}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            `);
+                        };
+                        // calls cardTemplate once each loop to create a button for that looped topic
+                        cardTemplate();
+                    }
+                });
+        };
+
+
+        // when a topic button is pressed, load initial batch of images matching the button's ID
+        $(".topic_button").on("click", function () {
+
+            // variable to hold the ID of any .topic_button clicked on
+            let buttonTopic = $(this).attr("id");
+
+            // set the currentTopic var's value as value of buttonTopic
+            // so the PLUS button below knows what topic to grab more images for
+            currentTopic = buttonTopic;
+
+            // construct the URL to retreive a batch of images matching the button's ID
+            // MPAA-style ratings Y, G, PG, PG-13 and R
+            // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+            queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=10";
+
+            ajaxBuildCards();
+
+        });
+
+
+
+
+
+
+
+
+        // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON ABOVE
+
+        // ----------------------------------------------------------------
+
         // FUNCTIONALITY OF START AND STOP ANIMATION BY CLICKING AN IMAGE BELOW
 
 
@@ -497,22 +555,8 @@
 
 
 
-        // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button ABOVE
+        // FUNCTIONALITY OF START AND STOP ANIMATION BY CLICKING AN IMAGE ABOVE
 
-        // ----------------------------------------------------------------
-
-        // FUNCTIONALITY OF XXXXXX BELOW
-
-
-
-
-
-
-
-
-
-
-        // FUNCTIONALITY OF XXXXXX ABOVE
         // ----------------------------------------------------------------
 
         // });
