@@ -275,12 +275,18 @@
         <i id="plus" class="fas fa-plus"></i>
     </header>
 
+
+
     <section id="input_contain" class="container-fluid">
         <div id="input_box" class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control" placeholder="make new category" aria-label="make new category" aria-describedby="button-addon2">
+
+            <!-- <form id="new_button" action=""> -->
+            <input id="addit_data" type="text" class="form-control" placeholder="make new category">
             <div class="input-group-append">
-                <button id="addit_btn" class="btn btn-secondary" type="button" id="button-addon2">add it!</button>
+                <button id="addit_btn" class="btn btn-secondary" type="submit">add it!</button>
             </div>
+            <!-- </form> -->
+
         </div>
     </section>
 
@@ -361,33 +367,7 @@
         </article>
 
 
-        <aside id="button_contain">
-
-            <!-- <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Siberian Husky</span>
-            </button>
-
-            <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Bengal Tiger</span>
-            </button>
-
-            <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Cat</span>
-            </button>
-
-            <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Honey Badger</span>
-            </button>
-
-            <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Tardigrade</span>
-            </button>
-
-            <button type="button" class="topic_button btn btn-secondary btn-sm">
-                <span class="button_type">Ferret</span>
-            </button> -->
-
-        </aside>
+        <aside id="button_contain"></aside>
 
     </main>
 
@@ -407,10 +387,18 @@
         // University of Richmond, Full Stack Web Development Bootcamp
         // JavaScript and jQuery
 
+
+        // START jQUERY FUNCTION
+        // ----------------------------------------------------------------
+
         // $(document).ready(function () {
 
+        // ----------------------------------------------------------------
+
+        // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS BELOW
+
         // Array to hold the display names (with spaces, U&lc) of each topic button
-        let topicsArray = ["Siberian Husky", "Bengal Tiger", "Manx Cat", "Honey Badger", "Tardigrade", "Ferret", "Kangaroo", "Echidna", "Muppet"];
+        let topicsArray = ["Siberian Husky", "Bengal Tiger", "Honey Badger", "Tardigrade", "Ferret", "Echidna", "Muppet"];
 
         // initialize a variable that will hold the current topic displayed
         // this will be a topic name from topicsArray,
@@ -419,7 +407,7 @@
 
         // function to convert a topic name to lowercase, and replace spaces with +
         // this will be used for the currentTopic variable, and also for topic button IDs
-        let topicFormatter = function(topicName) {
+        let topicFormatter = function (topicName) {
             let topicLowerCase = topicName.toLowerCase();
             let topicPlussed = topicLowerCase.replace(" ", "+");
             return topicPlussed;
@@ -427,6 +415,9 @@
 
         // function creates all topic buttons and appends them to the #button_contain <aside> element
         function makeButtons() {
+
+            // clear out all existing buttons before repopulating the list
+            $("#button_contain").html("");
 
             // loop through all elements in topicsArray
             for (let i = 0; i < topicsArray.length; i++) {
@@ -453,12 +444,49 @@
         // calls makeButtons() to create buttons for all elements in topicsArray on page load
         makeButtons();
 
+        // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS ABOVE
+
+        // ----------------------------------------------------------------
+
+        // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button BELOW
 
         // MAKE A NEW CATEGORY BUTTON FUNCTION
-        $("#plus").on("click", function() {
+        let makeNewButton = function () {
+            // variable to hold text entered in the "make new category" input field
+            let newButtonName = $("#addit_data").val();
+            // .push the new button name to the end of the topicsArray
+            topicsArray.push(newButtonName);
+            // refresh list of all buttons on page by calling makeButtons()
+            makeButtons();
+            // clear the just submitted value out of the field and reset
+            $("#addit_data").val("");
+        };
 
+
+        // MAKE A NEW CATEGORY BUTTON FUNCTION WITH INPUT'S ADD IT BUTTON
+        $("#addit_btn").on("click", function () {
+            // making sure that there is data in the field so no blank buttons are created
+            if ($("#addit_data").val() !== "") {
+                // call makeNewButton to make a new button when return is pressed
+                makeNewButton();
+            }
         });
 
+        // MAKE A NEW CATEGORY BUTTON FUNCTION ENTER/RETURN KEY PRESS
+        $(document).keypress(function (e) {
+            // listening for the Enter/Return keypress (key 13)
+            // and also making sure that there is data in the field so no blank buttons are created
+            if (e.which === 13 && $("#addit_data").val() !== "") {
+                // call makeNewButton to make a new button when return is pressed
+                makeNewButton();
+            }
+        });
+
+        // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button ABOVE
+
+        // ----------------------------------------------------------------
+
+        // FUNCTIONALITY OF START AND STOP ANIMATION BY CLICKING AN IMAGE BELOW
 
 
 
@@ -469,12 +497,28 @@
 
 
 
+        // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button ABOVE
+
+        // ----------------------------------------------------------------
+
+        // FUNCTIONALITY OF XXXXXX BELOW
 
 
 
 
+
+
+
+
+
+
+        // FUNCTIONALITY OF XXXXXX ABOVE
+        // ----------------------------------------------------------------
 
         // });
+
+        // END jQUERY FUNCTION
+        // ----------------------------------------------------------------
     </script>
 
 
