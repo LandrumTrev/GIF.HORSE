@@ -147,7 +147,7 @@
             border: 0px solid black;
         }
 
-        .cat_button  {
+        .topic_button  {
             margin: 4px;
             float: left;
             clear: both;
@@ -363,29 +363,29 @@
 
         <aside id="button_contain">
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
+            <!-- <button type="button" class="topic_button btn btn-secondary btn-sm">
                 <span class="button_type">Siberian Husky</span>
             </button>
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
+            <button type="button" class="topic_button btn btn-secondary btn-sm">
                 <span class="button_type">Bengal Tiger</span>
             </button>
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
+            <button type="button" class="topic_button btn btn-secondary btn-sm">
                 <span class="button_type">Cat</span>
             </button>
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
-                <span class="button_type">Monkey</span>
+            <button type="button" class="topic_button btn btn-secondary btn-sm">
+                <span class="button_type">Honey Badger</span>
             </button>
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
+            <button type="button" class="topic_button btn btn-secondary btn-sm">
                 <span class="button_type">Tardigrade</span>
             </button>
 
-            <button type="button" class="cat_button btn btn-secondary btn-sm">
+            <button type="button" class="topic_button btn btn-secondary btn-sm">
                 <span class="button_type">Ferret</span>
-            </button>
+            </button> -->
 
         </aside>
 
@@ -397,8 +397,84 @@
 
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
     <script>
+        // GifTastic
+        // API and AJAX single page app
+        // © Richard Trevillian, 2018-09-11
+        // University of Richmond, Full Stack Web Development Bootcamp
+        // JavaScript and jQuery
+
+        // $(document).ready(function () {
+
+        // Array to hold the display names (with spaces, U&lc) of each topic button
+        let topicsArray = ["Siberian Husky", "Bengal Tiger", "Manx Cat", "Honey Badger", "Tardigrade", "Ferret", "Kangaroo", "Echidna", "Muppet"];
+
+        // initialize a variable that will hold the current topic displayed
+        // this will be a topic name from topicsArray,
+        // but converted to lowercase, and spaces replaced with + using the topicFormatter() function
+        let currentTopic = "";
+
+        // function to convert a topic name to lowercase, and replace spaces with +
+        // this will be used for the currentTopic variable, and also for topic button IDs
+        let topicFormatter = function(topicName) {
+            let topicLowerCase = topicName.toLowerCase();
+            let topicPlussed = topicLowerCase.replace(" ", "+");
+            return topicPlussed;
+        };
+
+        // function creates all topic buttons and appends them to the #button_contain <aside> element
+        function makeButtons() {
+
+            // loop through all elements in topicsArray
+            for (let i = 0; i < topicsArray.length; i++) {
+
+                // variable stands for the current looped topic unformatted name (button innerText)
+                const subjectName = topicsArray[i];
+                // variable stands for the current looped topic formatted name (button ID)
+                const subjectID = topicFormatter(subjectName);
+
+                // function to create a button with innerText and ID of current looped topic from topicArray
+                let buttonTemplate = function () {
+                    // Template Literal to create a button and .append it to #button_contain <aside>
+                    $("#button_contain").append(`
+                    <button type="button" id="${subjectID}" class="topic_button btn btn-secondary btn-sm">
+                        <span class="button_type">${subjectName}</span>
+                    </button>
+                        `);
+                };
+                // calls buttonTemplate once each loop to create a button for that looped topic
+                buttonTemplate();
+            }
+        };
+
+        // calls makeButtons() to create buttons for all elements in topicsArray on page load
+        makeButtons();
+
+
+        // MAKE A NEW CATEGORY BUTTON FUNCTION
+        $("#plus").on("click", function() {
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // });
     </script>
 
 
@@ -411,3 +487,9 @@
 </body>
 
 </html>
+
+<!-- GifTastic
+API and AJAX single page app
+© Richard Trevillian, 2018-09-11
+University of Richmond, Full Stack Web Development Bootcamp
+JavaScript and jQuery -->
