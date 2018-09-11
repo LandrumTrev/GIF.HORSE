@@ -15,10 +15,6 @@
 
     <link rel="stylesheet" href="/assets/styles/styles.css">
 
-    <!-- <script src="/assets/scripts/jquery-3.3.1.min.js"></script> -->
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
 
@@ -359,6 +355,7 @@
 
 
 
+
     <footer id="foot_contain" class="container-fluid"></footer>
 
 
@@ -371,7 +368,6 @@
         // © Richard Trevillian, 2018-09-11
         // University of Richmond, Full Stack Web Development Bootcamp
         // JavaScript and jQuery
-
 
         // START jQUERY FUNCTION
         // ----------------------------------------------------------------
@@ -473,9 +469,29 @@
 
         // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON BELOW
 
+
+
         let queryURL = "";
 
-        let ajaxBuildCards = function () {
+        // when a topic button is pressed, load initial batch of images matching the button's ID
+        $(".topic_button").on("click", function () {
+
+            $("#card_contain").html("");
+
+            // variable to hold the ID of any .topic_button clicked on
+            let buttonTopic = $(this).attr("id");
+
+            // set the currentTopic var's value as value of buttonTopic
+            // so the PLUS button below knows what topic to grab more images for
+            currentTopic = buttonTopic;
+
+            // construct the URL to retreive a batch of images matching the button's ID
+            // MPAA-style ratings Y, G, PG, PG-13 and R
+            // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+
+            queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=10";
+
+
 
             // do a jQuery AJAX call on the constructed queryURL for the button clicked
             $.ajax({
@@ -487,17 +503,17 @@
                 .then(function (response) {
 
                     // loop through each object in the JSON object's "data" array
-                    for (let j = 0; j < data.length; j++) {
+                    for (let j = 0; j < response.data.length; j++) {
 
                         // imageObject holds each individual image's object from the "data" array
-                        const imageObject = data[j];
+                        const imageObject = response.data[j];
 
                         // function to create a card for each
                         let cardTemplate = function () {
                             // Template Literal to create a Boostrap card for each image and append it to #card_contain DIV
                             $("#card_contain").append(`
                                 <div class="card">
-                                    <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
+                                    <img class="card-img-top" src="${imageObject.images.original_still.url}" alt="Card image cap">
                                     <ul class="list-group list-group-flush">
                                         <li class="gif_title list-group-item">
                                             <span class="title">${imageObject.title}</span>
@@ -511,25 +527,6 @@
                         cardTemplate();
                     }
                 });
-        };
-
-
-        // when a topic button is pressed, load initial batch of images matching the button's ID
-        $(".topic_button").on("click", function () {
-
-            // variable to hold the ID of any .topic_button clicked on
-            let buttonTopic = $(this).attr("id");
-
-            // set the currentTopic var's value as value of buttonTopic
-            // so the PLUS button below knows what topic to grab more images for
-            currentTopic = buttonTopic;
-
-            // construct the URL to retreive a batch of images matching the button's ID
-            // MPAA-style ratings Y, G, PG, PG-13 and R
-            // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
-            queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=10";
-
-            ajaxBuildCards();
 
         });
 
@@ -566,9 +563,9 @@
     </script>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
     <script src="/assets/scripts/javascript.js"></script>
 
 
