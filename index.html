@@ -277,60 +277,17 @@
         </div>
     </section>
 
-
     <main>
 
         <article id="gif_contain" class="container-fluid">
-
-            <div id="card_contain" class="card-columns">
-
-
-                <div class="card">
-                    <img class="card-img-top" src="assets/images/husky-1.gif" alt="Card image cap">
-                    <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">
-                            <span class="title">title of this gif</span>
-                            <span class="rating">PG-13</span>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <div class="card">
-                    <img class="card-img-top" src="assets/images/husky-2.gif" alt="Card image cap">
-                    <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">
-                            <span class="title">title of this gif</span>
-                            <span class="rating">PG-13</span>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <div class="card">
-                    <img class="card-img-top" src="assets/images/husky-3.gif" alt="Card image cap">
-                    <ul class="list-group list-group-flush">
-                        <li class="gif_title list-group-item">
-                            <span class="title">title of this gif</span>
-                            <span class="rating">PG-13</span>
-                        </li>
-                    </ul>
-                </div>
-
-
+            <div id="card_contain" class="card-columns"></div>
         </article>
-
 
         <aside id="button_contain"></aside>
 
     </main>
 
-
-
-
     <footer id="foot_contain" class="container-fluid"></footer>
-
-
 
 
 
@@ -351,7 +308,7 @@
             // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS BELOW
 
             // Array to hold the display names (with spaces, U&lc) of each topic button
-            let topicsArray = ["Siberian Husky", "Blobfish", "Honey Badger", "Tardigrade", "Ferret", "Echidna", "Muppet"];
+            let topicsArray = ["Siberian Husky", "Pangolin", "Honey Badger", "Shiba Inu", "Ferret", "Echidna", "Muppet"];
 
             // initialize a variable that will hold the current topic displayed
             // this will be a topic name from topicsArray,
@@ -416,7 +373,7 @@
                         // Template Literal to create a Boostrap card for each image and append it to #card_contain DIV
                         $("#card_contain").append(`
                             <div class="card">
-                                <img class="card-img-top" src="${imageObject.images.original_still.url}">
+                                <img class="card-img-top" src="${imageObject.images.original_still.url}" data-still="${imageObject.images.original_still.url}" data-animate="${imageObject.images.original.url}" data-state="still" class="gif">
                                 <ul class="list-group list-group-flush">
                                     <li class="gif_title list-group-item">
                                         <span class="title">${imageObject.title}</span>
@@ -431,12 +388,33 @@
                 }
 
                 // EVENT HANDLERS FOR TEMPLATE LITERAL CONSTRUCTIONS HAVE TO COME AFTER THEM
-                $(".card").on("click", function () {
+                $(".card-img-top").on("click", function () {
 
+                    // variable state to stand for the data-state attribute of the image clicked on
+                    var state = $(this).attr("data-state");
+                    
+                    // if data-state="still",
+                    if (state === "still") {
+                        // change the src="" to the value of the img's data-animate="" attribute
+                        $(this).attr("src", $(this).attr("data-animate"));
+                        // and change the img's data-state="" value to "animate"
+                        $(this).attr("data-state", "animate");
+
+                    // otherwise (if data-state is NOT "still"... i.e., it is "animate")
+                    } else {
+                        // then change the img's src="" to the value of the data-still="" attribute
+                        $(this).attr("src", $(this).attr("data-still"));
+                        // and change the img's data-state="" to "still"
+                        $(this).attr("data-state", "still");
+                    }
+
+                    // and give us some monkey butts
                     console.log("monkey butts");
 
                 });
             };
+
+
 
 
             // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS ABOVE
