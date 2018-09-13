@@ -303,77 +303,93 @@
 
         $(document).ready(function () {
 
+
             // ----------------------------------------------------------------
 
-            // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS BELOW
 
             // Array to hold the display names (with spaces, U&lc) of each topic button
-            let topicsArray = ["Siberian Husky", "Pangolin", "Honey Badger", "Shiba Inu", "Ferret", "Echidna", "Bunny"];
+            let topicsArray = [
+                "Siberian Husky",
+                "Pangolin",
+                "Honey Badger",
+                "Shiba Inu",
+                "Ferret",
+                "Echidna",
+                "Bunny"
+            ];
 
-            // initialize a variable that will hold the current topic displayed
-            // this will be a topic name from topicsArray,
-            // but converted to lowercase, and spaces replaced with + using the topicFormatter() function
+            // intialized globally, so various functions and variables can change it or access it
             let currentTopic = "";
 
-            // initialize a variable that will hold a constructed query URL string with currentTopic
-            let queryURL = "";
-
-            // variable for controlling the number of images returned per ajax batch call
+            // set the number of images returned on a topic button push
             let numberOfImagesReturned = 3;
 
 
-            // function to convert a topic name to lowercase, and replace spaces with +
-            // this will be used for the currentTopic variable, and also for topic button IDs
-            let topicFormatter = function (topicName) {
-                let topicLowerCase = topicName.toLowerCase();
-                let topicPlussed = topicLowerCase.replace(" ", "+");
-                return topicPlussed;
-            };
+            // ----------------------------------------------------------------
 
-            // function creates all topic buttons and appends them to the #button_contain <aside> element
+
+            // CREATE TOPIC BUTTONS FOR ALL ELEMENTS IN topicsArray
             function makeButtons() {
 
                 // clear out all existing buttons before repopulating the list
                 $("#button_contain").html("");
+
+                // used in FOR loop below to convert names in topicsArray to URL format for button IDs
+                let topicFormatter = function (topicName) {
+
+                    // convert passed-in name to lower case
+                    let topicLowerCase = topicName.toLowerCase();
+
+                    // then take the lower-cased name and replace any spaces with +
+                    let topicPlussed = topicLowerCase.replace(" ", "+");
+
+                    // and return the lower-cased and plussed name as the value of topicFormatter()
+                    return topicPlussed;
+                };
 
                 // loop through all elements in topicsArray
                 for (let i = 0; i < topicsArray.length; i++) {
 
                     // variable stands for the current looped topic unformatted name (button innerText)
                     const subjectName = topicsArray[i];
+
                     // variable stands for the current looped topic formatted name (button ID)
                     const subjectID = topicFormatter(subjectName);
 
-                    // function to create a button with innerText and ID of current looped topic from topicArray
+                    // create a button with loop item's innerText and ID
                     let buttonTemplate = function () {
-                        // Template Literal to create a button and .append it to #button_contain <aside>
-                        $("#button_contain").append(`
-                    <button type="button" id="${subjectID}" class="topic_button btn btn-secondary btn-sm">
-                        <span class="button_type">${subjectName}</span>
-                    </button>
+
+                        // Template Literal to create a button and .prepend it to #button_contain <aside>
+                        $("#button_contain").prepend(`
+                            <button type="button" id="${subjectID}" class="topic_button btn btn-secondary btn-sm">
+                                <span class="button_type">${subjectName}</span>
+                            </button>
                         `);
                     };
-                    // calls buttonTemplate once each loop to create a button for that looped topic
+
+                    // call buttonTemplate() on each loop to create a button for a topic name from topicsArray
                     buttonTemplate();
                 }
             };
 
-            // calls makeButtons() to create buttons for all elements in topicsArray on page load
+
+            // WHEN PAGE LOADS OR RELOADS, BUILD A LIST OF THE DEFAULT TOPIC BUTTONS
             makeButtons();
 
 
-            // define a function that will fill .card-columns with a batch of cards with event handlers
-            // this is the callback function called by the AJAX .then promise handler
-            let makeCardBatch = function (response) {
+            // ----------------------------------------------------------------
 
-                // imageObject holds each individual image's object from the "data" array
-                // const imageObject = response.data[j];
+
+            // CALLBACK FOR THE AJAX PROMISE
+            let makeCard = function (response) {
+
+                // holds the entire object returned by the ajax call
                 const imageObject = response.data;
 
-                // function to create a card for each
+                // creates a card for each gif returned by ajax call
                 let cardTemplate = function () {
                     // Template Literal to create a Boostrap card for each image and prepend it to #card_contain DIV
-                    $("#card_contain").append(`
+                    $("#card_contain").prepend(`
                             <div class="card">
                                 <img class="card-img-top gif" 
                                     src="${imageObject.images.original_still.url}" 
@@ -388,84 +404,79 @@
                             </div>
                         `);
 
-                    // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THIS HANDLER ON ODD-NUMBERED CARDS!!??
-                    // EVENT HANDLERS FOR TEMPLATE LITERAL CONSTRUCTIONS HAVE TO COME AFTER THEM
+                    // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THE TOGGLE HANDLER ON ODD-NUMBERED CARDS!!??
                     $(".card-img-top").on("click", function () {
 
-                        // variable state to stand for the data-state attribute of the image clicked on
+                        // variable to stand for the data-state attribute of the image clicked on
                         var state = $(this).attr("data-state");
 
+                        // if data-state is ANIMATE, then...
                         if (state === "animate") {
-                            // and change the img's data-state="" to "still"
+                            // change the img's data-state="" to "still"
                             $(this).attr("data-state", "still");
-                            // then change the img's src="" to the value of the data-still="" attribute
+                            // change the img's src="" to the value of the data-still="" attribute
                             $(this).attr("src", $(this).attr("data-still"));
 
                         } else if (state === "still") {
-                            // and change the img's data-state="" value to "animate"
+                            // change the img's data-state="" value to "animate"
                             $(this).attr("data-state", "animate");
                             // change the src="" to the value of the img's data-animate="" attribute
                             $(this).attr("src", $(this).attr("data-animate"));
                         }
-
                     });
 
                 };
 
-                // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THIS HANDLER ON EVEN-NUMBERED CARDS!!??
-                // EVENT HANDLERS FOR TEMPLATE LITERAL CONSTRUCTIONS HAVE TO COME AFTER THEM
+                // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THE TOGGLE HANDLER ON EVEN-NUMBERED CARDS!!??
                 $(".card-img-top").on("click", function () {
 
-                    // variable state to stand for the data-state attribute of the image clicked on
+                    // variable to stand for the data-state attribute of the image clicked on
                     var state = $(this).attr("data-state");
 
+                    // if data-state is ANIMATE, then...
                     if (state === "animate") {
-                        // and change the img's data-state="" to "still"
+                        // change the img's data-state="" to "still"
                         $(this).attr("data-state", "still");
-                        // then change the img's src="" to the value of the data-still="" attribute
+                        // change the img's src="" to the value of the data-still="" attribute
                         $(this).attr("src", $(this).attr("data-still"));
 
                     } else if (state === "still") {
-                        // and change the img's data-state="" value to "animate"
+                        // change the img's data-state="" value to "animate"
                         $(this).attr("data-state", "animate");
                         // change the src="" to the value of the img's data-animate="" attribute
                         $(this).attr("src", $(this).attr("data-animate"));
                     }
-
                 });
 
                 // calls cardTemplate once each loop to create a button for that looped topic
                 cardTemplate();
-                // }
 
             };
 
 
-
-
-            // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS ABOVE
-
             // ----------------------------------------------------------------
 
-            // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button BELOW
 
-            // MAKE A NEW CATEGORY BUTTON FUNCTION
+            // DEFINE MAKE NEW BUTTON FUNCTION, USED BY "ADD IT!" BUTTON and RETURN BUTTON EVENT HANDLERS
             let makeNewButton = function () {
+
                 // variable to hold text entered in the "make new category" input field
                 let newButtonName = $("#addit_data").val();
+
                 // .push the new button name to the end of the topicsArray
                 topicsArray.push(newButtonName);
+
                 // refresh list of all buttons on page by calling makeButtons()
                 makeButtons();
+
                 // clear the just submitted value out of the field and reset
                 $("#addit_data").val("");
 
-
+                // DUPLICATE CODE: ADD EVENT HANDLER TO THE NEWLY CREATED BUTTON
                 // when a topic button is pressed, load initial batch of images matching the button's ID
                 $(".topic_button").on("click", function () {
 
-                    numberOfImagesReturned = 3;
-
+                    // clear out all current gifs before getting a new batch
                     $("#card_contain").html("");
 
                     // variable to hold the ID of any .topic_button clicked on
@@ -475,35 +486,22 @@
                     // so the PLUS button below knows what topic to grab more images for
                     currentTopic = buttonTopic;
 
-                    // construct the URL to retreive a batch of images matching the button's ID
-                    // MPAA-style ratings Y, G, PG, PG-13 and R
-                    // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+                    // using Trilogy's production key; personal beta key was constantly being restricted
+                    let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
-                    // using my beta API key; GIPHY IS SUPER-RESTRICTIVE ABOUT THE REQUESTS IT ALLOWS WITH THIS
-                    // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&tag=" + currentTopic + "&rating=G";
-
-                    // getting a random image template
-                    queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
-
-
+                    // run as many loops as the value of variable numberOfImagesReturned
                     for (let k = 0; k < numberOfImagesReturned; k++) {
 
-                        // const element = k;
-
-                        // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                        // make a call for an image
                         $.ajax({
                                 url: queryURL,
                                 method: "GET"
                             })
-
-                            // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
                             .then(function (response) {
-
-                                makeCardBatch(response);
-
+                                // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                                makeCard(response);
                             });
-                    }
-
+                    };
                 });
             };
 
@@ -517,6 +515,7 @@
                 }
             });
 
+
             // MAKE A NEW CATEGORY BUTTON FUNCTION ENTER/RETURN KEY PRESS
             $(document).keypress(function (e) {
                 // listening for the Enter/Return keypress (key 13)
@@ -527,19 +526,14 @@
                 }
             });
 
-            // FUNCTIONALITY OF MAKE NEW CATEGORY field and ADD IT! button ABOVE
 
             // ----------------------------------------------------------------
 
-            // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON BELOW
 
-
-
-            // when a topic button is pressed, load initial batch of images matching the button's ID
+            // LOAD A FRESH BATCH OF RANDOM GIFS WHEN A TOPIC BUTTON IS PRESSED
             $(".topic_button").on("click", function () {
 
-                numberOfImagesReturned = 3;
-
+                // clear out all current gifs before getting a new batch
                 $("#card_contain").html("");
 
                 // variable to hold the ID of any .topic_button clicked on
@@ -549,74 +543,49 @@
                 // so the PLUS button below knows what topic to grab more images for
                 currentTopic = buttonTopic;
 
-                // construct the URL to retreive a batch of images matching the button's ID
-                // MPAA-style ratings Y, G, PG, PG-13 and R
-                // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+                // using Trilogy's production key; personal beta key was constantly being restricted
+                let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
-                // using my beta API key; GIPHY IS SUPER-RESTRICTIVE ABOUT THE REQUESTS IT ALLOWS WITH THIS
-                // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&tag=" + currentTopic + "&rating=G";
-
-                // getting a random image template
-                queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
-
-
+                // run as many loops as the value of variable numberOfImagesReturned
                 for (let k = 0; k < numberOfImagesReturned; k++) {
 
-                    // const element = k;
-
-                    // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                    // make a call for an image
                     $.ajax({
                             url: queryURL,
                             method: "GET"
                         })
-
-                        // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
                         .then(function (response) {
-
-                            makeCardBatch(response);
-
+                            // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                            makeCard(response);
                         });
-                }
-
+                };
             });
 
-            // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON ABOVE
 
             // ----------------------------------------------------------------
 
-            // FUNCTIONALITY OF ADD ANOTHER BATCH OF SAME TOPIC BELOW
 
+            // PLUS BUTTON ADDS ONE MORE IMAGE OF CURRENT SUBJECT
             $("#plus").on("click", function () {
 
-                // getting a random image template
-                queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
+                // using Trilogy's production key; personal beta key was constantly being restricted
+                let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
-                // for (let k = 0; k < numberOfImagesReturned; k++) {
-
-                    // const element = k;
-
-                    // do a jQuery AJAX call on the constructed queryURL for the button clicked
-                    $.ajax({
-                            url: queryURL,
-                            method: "GET"
-                        })
-
-                        // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
-                        .then(function (response) {
-
-                            makeCardBatch(response);
-
-                        });
-                // }
+                // make a call for an image
+                $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+                    .then(function (response) {
+                        // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                        makeCard(response);
+                    });
             });
 
-            // FUNCTIONALITY OF ADD ANOTHER BATCH OF SAME TOPIC ABOVE
 
-            // ----------------------------------------------------------------
 
+            // END jQUERY FUNCTION
         });
-
-        // END jQUERY FUNCTION
         // ----------------------------------------------------------------
     </script>
 
