@@ -15,13 +15,23 @@ $(document).ready(function () {
 
     // Array to hold the display names (with spaces, U&lc) of each topic button
     let topicsArray = [
-        "Siberian Husky",
+        "Drone",
+        "Unicorn",
+        "Platypus",
+        "Echidna",
         "Pangolin",
         "Honey Badger",
         "Shiba Inu",
+        "Penguin",
+        "Octopus",
+        "MST3K",
+        "Moana",
+        "Alf",
         "Ferret",
-        "Echidna",
-        "Bunny"
+        "Dolphin",
+        "Owl",
+        "Cat",
+        "Siberian Husky"
     ];
 
     // intialized globally, so various functions and variables can change it or access it

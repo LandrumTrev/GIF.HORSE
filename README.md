@@ -17,7 +17,7 @@
 - Click on the GIFs to start and stop their animation.
 - Enter a new topic in the "make a new catgory" field and click "add it!" or hit Enter to make a new topic button.
 - Click the + (plus) to load another GIF from your current topic, or to load a completely random GIF if no topic is currently selected.
-- Click on the - (minus) to clear all GIFs from the screen and reset to no current topic.
+- Click on the - (minus) to clear all GIFs from the screen and reset the topics list.
 - Click on the POWERED BY GIPHY logo to visit the Fountain of All Gifs.
 - Click on DESIGN+DEV © 2018 RICH TREVILLIAN to see more of my design and development work.
 
