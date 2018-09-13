@@ -53,7 +53,7 @@
             top: 0;
             height: 40px;
             padding-top: 10px;
-            background: linear-gradient(217deg, rgba(183, 197, 208,.8), rgba(183, 197, 208,0) 70.71%), linear-gradient(127deg, rgba(255, 0, 0, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%), #000;
+            background: linear-gradient(217deg, rgba(183, 197, 208,.8), rgba(183, 197, 208,0) 70.71%), linear-gradient(33deg, rgba(255, 0, 0, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%), #000;
             box-shadow: 0 0 3px rgb(0, 0, 0);
         }
 
@@ -67,13 +67,31 @@
         }
 
         #plus {
+            box-sizing: border-box;
+            height: 40px;
             position: absolute;
             top: 0px;
             right: 0px;
             float: right;
             color: rgb(218, 3, 3);
             background-color: rgb(233, 222, 222);
-            padding: 8px 10px;
+            padding: 9px;
+            margin: 0;
+            font-size: 1.47rem;
+            text-shadow: 1px 1px 1px #888;
+
+        }
+
+        #minus {
+            box-sizing: border-box;
+            height: 40px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            float: left;
+            color: rgb(233, 222, 222);
+            background-color: rgb(94, 124, 245);
+            padding: 9px;
             margin: 0;
             font-size: 1.47rem;
             text-shadow: 1px 1px 1px #888;
@@ -264,8 +282,9 @@
 <body>
 
     <header id="head_contain" class="container-fluid">
-        <p>GIFTASTIC</p>
+        <p id="logotype">GIFTASTIC</p>
         <i id="plus" class="fas fa-plus"></i>
+        <i id="minus" class="fas fa-minus"></i>
     </header>
 
     <section id="input_contain" class="container-fluid">
@@ -580,6 +599,18 @@
                         // build a Bootstrap card with a Template Literal and attach a click Event Handler
                         makeCard(response);
                     });
+            });
+
+
+
+
+            // ----------------------------------------------------------------
+
+
+            // CLICKING ON PAGE HEADER LOGO RELOADS PAGE TO BLANK
+            $("#minus").on("click", function () {
+
+                window.location.reload(true);
             });
 
 
