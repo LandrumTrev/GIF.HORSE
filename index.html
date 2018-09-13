@@ -308,7 +308,7 @@
             // FUNCTIONALITY AND INITIALIZATION OF ALL ON PAGE LOAD ITEMS BELOW
 
             // Array to hold the display names (with spaces, U&lc) of each topic button
-            let topicsArray = ["Siberian Husky", "Pangolin", "Honey Badger", "Shiba Inu", "Ferret", "Echidna", "Muppet"];
+            let topicsArray = ["Siberian Husky", "Pangolin", "Honey Badger", "Shiba Inu", "Ferret", "Echidna", "Bunny"];
 
             // initialize a variable that will hold the current topic displayed
             // this will be a topic name from topicsArray,
@@ -317,6 +317,10 @@
 
             // initialize a variable that will hold a constructed query URL string with currentTopic
             let queryURL = "";
+
+            // variable for controlling the number of images returned per ajax batch call
+            let numberOfImagesReturned = 3;
+
 
             // function to convert a topic name to lowercase, and replace spaces with +
             // this will be used for the currentTopic variable, and also for topic button IDs
@@ -370,8 +374,8 @@
 
                     // function to create a card for each
                     let cardTemplate = function () {
-                        // Template Literal to create a Boostrap card for each image and append it to #card_contain DIV
-                        $("#card_contain").append(`
+                        // Template Literal to create a Boostrap card for each image and prepend it to #card_contain DIV
+                        $("#card_contain").prepend(`
                             <div class="card">
                                 <img class="card-img-top" src="${imageObject.images.original_still.url}" data-still="${imageObject.images.original_still.url}" data-animate="${imageObject.images.original.url}" data-state="still" class="gif">
                                 <ul class="list-group list-group-flush">
@@ -392,7 +396,7 @@
 
                     // variable state to stand for the data-state attribute of the image clicked on
                     var state = $(this).attr("data-state");
-                    
+
                     // if data-state="still",
                     if (state === "still") {
                         // change the src="" to the value of the img's data-animate="" attribute
@@ -400,7 +404,7 @@
                         // and change the img's data-state="" value to "animate"
                         $(this).attr("data-state", "animate");
 
-                    // otherwise (if data-state is NOT "still"... i.e., it is "animate")
+                        // otherwise (if data-state is NOT "still"... i.e., it is "animate")
                     } else {
                         // then change the img's src="" to the value of the data-still="" attribute
                         $(this).attr("src", $(this).attr("data-still"));
@@ -438,6 +442,8 @@
                 // when a topic button is pressed, load initial batch of images matching the button's ID
                 $(".topic_button").on("click", function () {
 
+                    numberOfImagesReturned = 3;
+
                     $("#card_contain").html("");
 
                     // variable to hold the ID of any .topic_button clicked on
@@ -450,7 +456,7 @@
                     // construct the URL to retreive a batch of images matching the button's ID
                     // MPAA-style ratings Y, G, PG, PG-13 and R
                     // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
-                    queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=10";
+                    queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=PG&limit=" + numberOfImagesReturned + "";
 
                     // do a jQuery AJAX call on the constructed queryURL for the button clicked
                     $.ajax({
@@ -462,6 +468,8 @@
                         .then(function (response) {
 
                             makeCardBatch(response);
+
+                            console.log(response);
 
                         });
                 });
@@ -498,6 +506,8 @@
             // when a topic button is pressed, load initial batch of images matching the button's ID
             $(".topic_button").on("click", function () {
 
+                numberOfImagesReturned = 3;
+
                 $("#card_contain").html("");
 
                 // variable to hold the ID of any .topic_button clicked on
@@ -510,7 +520,15 @@
                 // construct the URL to retreive a batch of images matching the button's ID
                 // MPAA-style ratings Y, G, PG, PG-13 and R
                 // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
-                queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=10";
+                queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=PG&limit=" + numberOfImagesReturned + "";
+
+                // using Triolgy's Production API key
+                // queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=dc6zaTOxFJmzC&rating=PG-13&limit=10";
+
+                // using Triolgy's Production API key
+                // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+
+
 
                 // do a jQuery AJAX call on the constructed queryURL for the button clicked
                 $.ajax({
@@ -523,21 +541,43 @@
 
                         makeCardBatch(response);
 
+                        console.log(response);
+
                     });
 
             });
-
-
 
             // FUNCTIONALITY OF LOAD A BATCH OF IMAGES BY CLICKING A TOPIC BUTTON ABOVE
 
             // ----------------------------------------------------------------
 
-            // FUNCTIONALITY OF START AND STOP ANIMATION BY CLICKING AN IMAGE BELOW
+            // FUNCTIONALITY OF ADD ANOTHER BATCH OF SAME TOPIC BELOW
 
+            $("#plus").on("click", function () {
 
+                $("#card_contain").html("");
 
-            // FUNCTIONALITY OF START AND STOP ANIMATION BY CLICKING AN IMAGE ABOVE
+                numberOfImagesReturned++
+
+                // construct the URL to retreive a batch of images matching the button's ID
+                // MPAA-style ratings Y, G, PG, PG-13 and R
+                // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+                queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=PG&limit=" + numberOfImagesReturned + "";
+
+                // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+
+                    // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
+                    .then(function (response) {
+
+                        makeCardBatch(response);
+                    });
+            });
+
+            // FUNCTIONALITY OF ADD ANOTHER BATCH OF SAME TOPIC ABOVE
 
             // ----------------------------------------------------------------
 
