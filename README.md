@@ -4,13 +4,13 @@
 #### © Richard Trevillian, 2018-09-13
 ##### University of Richmond, Full Stack Web Development Bootcamp
 
-[get your gif on](https://github.com/LandrumTrev/GifTastic-APIsAJAX)
+[get your gif on](https://landrumtrev.github.io/GIF.HORSE-APIsAJAX/)
 
-[view the source code](https://github.com/LandrumTrev/GifTastic-APIsAJAX)
+[view the source code](https://github.com/LandrumTrev/GIF.HORSE-APIsAJAX)
 
-[https://github.com/LandrumTrev/GifTastic-APIsAJAX](https://github.com/LandrumTrev/GifTastic-APIsAJAX)
+[https://landrumtrev.github.io/GIF.HORSE-APIsAJAX/](https://landrumtrev.github.io/GIF.HORSE-APIsAJAX/)
 
-[https://github.com/LandrumTrev/GifTastic-APIsAJAX](https://github.com/LandrumTrev/GifTastic-APIsAJAX)
+[https://github.com/LandrumTrev/GIF.HORSE-APIsAJAX](https://github.com/LandrumTrev/GIF.HORSE-APIsAJAX)
 
 
 - Click on the topic buttons to get three random GIFs of that topic.
@@ -19,5 +19,5 @@
 - Click the + (plus) to load another GIF from your current topic, or to load a completely random GIF if no topic is currently selected.
 - Click on the - (minus) to clear all GIFs from the screen and reset to no current topic.
 - Click on the POWERED BY GIPHY logo to visit the Fountain of All Gifs.
-- Click on DESIGN+DEV © 2018 RICH TREVILLIAN to see my design and development portfolio.
+- Click on DESIGN+DEV © 2018 RICH TREVILLIAN to see more of my design and development work.
 
