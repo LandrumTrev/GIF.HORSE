@@ -1,0 +1,299 @@
+/* GIF.HORSE
+API and AJAX single page app, powered by GIPHY
+© Richard Trevillian, 2018-09-13
+University of Richmond, Full Stack Web Development Bootcamp
+JavaScript and jQuery */
+
+
+/* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
+
+@import url('https://fonts.googleapis.com/css?family=Chango|Unica+One');
+
+@font-face {
+    font-family: system;
+    font-style: normal;
+    font-weight: 300;
+    src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+/* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
+
+
+/* PAGE STYLES BELOW */
+
+body {
+    background-color: #333;
+}
+
+/* PAGE STYLES ABOVE */
+
+
+/* HEADER STYLES BELOW */
+#head_contain {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    height: 40px;
+    padding-top: 10px;
+    background: linear-gradient(217deg, rgba(183, 197, 208,.8), rgba(183, 197, 208,0) 70.71%), linear-gradient(33deg, rgba(255, 0, 0, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%), #000;
+    box-shadow: 0 0 3px rgb(0, 0, 0);
+}
+
+#head_contain p {
+    color: #eee;
+    text-shadow: 1px 1px 1px #000;
+    font-family: 'Chango', cursive;
+    font-size: 1.1rem;
+    letter-spacing: .55rem;
+    text-indent: .55rem;
+    text-align: center;
+    margin-top: -2px;
+}
+
+#plus {
+    box-sizing: border-box;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    float: right;
+    color: rgb(218, 3, 3);
+    background-color: rgb(233, 222, 222);
+    padding: 9px;
+    margin: 0;
+    font-size: 1.47rem;
+    text-shadow: 1px 1px 1px #888;
+
+}
+
+#minus {
+    box-sizing: border-box;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    float: left;
+    color: rgb(233, 222, 222);
+    background-color: rgb(94, 124, 245);
+    padding: 9px;
+    margin: 0;
+    font-size: 1.47rem;
+    text-shadow: 1px 1px 1px #888;
+
+}
+
+/* HEADER STYLES ABOVE */
+
+/* INPUT FIELD AND BUTTON STYLES BELOW */
+
+#input_contain {
+    position: fixed;
+    z-index: 1;
+    top: 44px;
+    height: 40px;
+}
+
+#addit_btn {
+    background: rgba(113, 113, 218, 0.8);
+    border: 0px solid black;
+}
+
+#input_box {
+    margin: 5px auto;
+    max-width: 205px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+
+}
+
+/* INPUT FIELD AND BUTTON STYLES ABOVE */
+
+/* GIF CARD CONTENT AREA STYLES BELOW */
+
+main {
+    margin: 0 auto;
+    max-width: 2810px;
+    display: flex;
+    justify-content: center;
+}
+
+#gif_contain {
+    margin: 5px 0 0 0;
+    padding: 90px 0px 0px 10px;
+    height: 100vh;
+    float: left;
+}
+
+.card {
+    border: 0px;
+    background-color: #000;
+}
+
+.title {
+    float: left;
+}
+
+.gif_title {
+    font-size: 1rem;
+    font-family: 'Unica One', cursive;
+    padding: 1px 10px;
+    color: #aaa;
+    background-color: #666;
+    text-shadow: 1px 1px 1px #333;
+
+}
+
+/* GIF CARD CONTENT AREA STYLES ABOVE */
+
+/* TOPIC BUTTON AREA STYLES BELOW */
+
+#button_contain {
+    padding-top: 90px;
+    padding-left: 10px;
+    padding-right: 5px;
+    height: 100vh;
+    min-width: 10%;
+    float: right;
+    overflow: hidden;
+}
+
+.topic_button  {
+    margin: 4px;
+    float: left;
+    clear: both;
+    max-width: 90%;
+    overflow: hidden;
+    background-color: rgb(165, 74, 74);
+    border: 0px solid black;
+    padding: 3px 8px;
+}
+
+.btn.btn-secondary.focus,
+.btn.btn-secondary:focus {
+    color: #fff;
+    background-color: #fa0404;
+    border-color: #5cb85c;
+    outline: none;
+    box-shadow: none;
+}
+
+.btn.btn-secondary:hover {
+    color: #fff;
+    background-color: #fa0404;
+    border-color: #5cb85c;
+    outline: none;
+    box-shadow: none;
+}
+.btn.btn-secondary.active,
+.btn.btn-secondary:active {
+    color: #fff;
+    background-color: #fa0404;
+    border-color: #5cb85c;
+    outline: none;
+}
+.btn.btn-secondary.active.focus,
+.btn.btn-secondary.active:focus,
+.btn.btn-secondary.active:hover,
+.btn.btn-secondary:active.focus,
+.btn.btn-secondary:active:focus,
+.btn.btn-secondary:active:hover {
+    color: #fff;
+    background-color: #fa0404;
+    border-color: #5cb85c;
+    outline: none;
+    box-shadow: none;
+}
+
+
+.button_type {
+    font-size: .8rem;
+    font-family: 'Unica One', cursive;
+    letter-spacing: .03rem;
+}
+
+/* TOPIC BUTTON AREA STYLES ABOVE */
+
+/* FOOTER STYLES BELOW */
+
+#giphylogo {
+    position: fixed;
+    bottom: 7px;
+    right: 5px;
+    width: 120px;
+}
+
+#signature {
+    color: #666;
+    font-size: .5rem;
+    position: fixed;
+    margin: 0;
+    bottom: 12px;
+    left: 12px;
+}
+
+#foot_contain {
+    position: fixed;
+    bottom: 0;
+    height: 36px;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+/* FOOTER STYLES ABOVE */
+
+/* MEDIA QUERIES BELOW */
+
+/* Extra small devices (phones, 575px and down) */
+@media only screen and (max-width: 575px) {
+
+    #gif_contain {
+        width: 60%;
+        }
+
+     } 
+     
+/* Small devices (portrait tablets and large phones, 576px and up) */
+@media only screen and (min-width: 576px) {
+
+    #gif_contain {
+        width: 70%;
+        }
+
+    .card-columns {
+        column-count: 2;
+        }
+
+     } 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+        #giphylogo {
+            bottom: 8px;
+            right: 10px;
+            width: 150px;
+        }
+
+        #signature {
+            font-size: .7rem;
+            bottom: 15px;
+            left: 15px;
+        }
+
+        #foot_contain {
+            height: 46px;
+        }
+    
+     } 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    #gif_contain {
+        width: 80%;
+        }
+
+    .card-columns {
+        column-count: 3;
+        }
+
+     }
+/* MEDIA QUERIES ABOVE */

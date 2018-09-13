@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GIF.HORSE</title>
+
+    <link rel="stylesheet" href="assets/styles/normalize.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="assets/styles/styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+    <style>
+
+        /* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
+        
+        @import url('https://fonts.googleapis.com/css?family=Chango|Unica+One');
+
+        @font-face {
+            font-family: system;
+            font-style: normal;
+            font-weight: 300;
+            src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+        }
+
+        /* FONT @IMPORT STYLES GO FIRST! BEFORE EVERYTHING! */
+
+
+        /* PAGE STYLES BELOW */
+
+        body {
+            background-color: #333;
+        }
+
+        /* PAGE STYLES ABOVE */
+
+
+        /* HEADER STYLES BELOW */
+        #head_contain {
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            height: 40px;
+            padding-top: 10px;
+            background: linear-gradient(217deg, rgba(183, 197, 208,.8), rgba(183, 197, 208,0) 70.71%), linear-gradient(33deg, rgba(255, 0, 0, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%), #000;
+            box-shadow: 0 0 3px rgb(0, 0, 0);
+        }
+
+        #head_contain p {
+            color: #eee;
+            text-shadow: 1px 1px 1px #000;
+            font-family: 'Chango', cursive;
+            font-size: 1.1rem;
+            letter-spacing: .55rem;
+            text-indent: .55rem;
+            text-align: center;
+            margin-top: -2px;
+        }
+
+        #plus {
+            box-sizing: border-box;
+            height: 40px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            float: right;
+            color: rgb(218, 3, 3);
+            background-color: rgb(233, 222, 222);
+            padding: 9px;
+            margin: 0;
+            font-size: 1.47rem;
+            text-shadow: 1px 1px 1px #888;
+
+        }
+
+        #minus {
+            box-sizing: border-box;
+            height: 40px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            float: left;
+            color: rgb(233, 222, 222);
+            background-color: rgb(94, 124, 245);
+            padding: 9px;
+            margin: 0;
+            font-size: 1.47rem;
+            text-shadow: 1px 1px 1px #888;
+
+        }
+
+        /* HEADER STYLES ABOVE */
+
+        /* INPUT FIELD AND BUTTON STYLES BELOW */
+
+        #input_contain {
+            position: fixed;
+            z-index: 1;
+            top: 44px;
+            height: 40px;
+        }
+
+        #addit_btn {
+            background: rgba(113, 113, 218, 0.8);
+            border: 0px solid black;
+        }
+
+        #input_box {
+            margin: 5px auto;
+            max-width: 205px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+
+        }
+
+        /* INPUT FIELD AND BUTTON STYLES ABOVE */
+
+        /* GIF CARD CONTENT AREA STYLES BELOW */
+
+        main {
+            margin: 0 auto;
+            max-width: 2810px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #gif_contain {
+            margin: 5px 0 0 0;
+            padding: 90px 0px 0px 10px;
+            height: 100vh;
+            float: left;
+        }
+
+        .card {
+            border: 0px;
+            background-color: #000;
+        }
+
+        .title {
+            float: left;
+        }
+
+        .gif_title {
+            font-size: 1rem;
+            font-family: 'Unica One', cursive;
+            padding: 1px 10px;
+            color: #aaa;
+            background-color: #666;
+            text-shadow: 1px 1px 1px #333;
+
+        }
+        
+        /* GIF CARD CONTENT AREA STYLES ABOVE */
+
+        /* TOPIC BUTTON AREA STYLES BELOW */
+
+        #button_contain {
+            padding-top: 90px;
+            padding-left: 10px;
+            padding-right: 5px;
+            height: 100vh;
+            min-width: 10%;
+            float: right;
+            overflow: hidden;
+        }
+
+        .topic_button  {
+            margin: 4px;
+            float: left;
+            clear: both;
+            max-width: 90%;
+            overflow: hidden;
+            background-color: rgb(165, 74, 74);
+            border: 0px solid black;
+            padding: 3px 8px;
+        }
+
+        .btn.btn-secondary.focus,
+        .btn.btn-secondary:focus {
+            color: #fff;
+            background-color: #fa0404;
+            border-color: #5cb85c;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .btn.btn-secondary:hover {
+            color: #fff;
+            background-color: #fa0404;
+            border-color: #5cb85c;
+            outline: none;
+            box-shadow: none;
+        }
+        .btn.btn-secondary.active,
+        .btn.btn-secondary:active {
+            color: #fff;
+            background-color: #fa0404;
+            border-color: #5cb85c;
+            outline: none;
+        }
+        .btn.btn-secondary.active.focus,
+        .btn.btn-secondary.active:focus,
+        .btn.btn-secondary.active:hover,
+        .btn.btn-secondary:active.focus,
+        .btn.btn-secondary:active:focus,
+        .btn.btn-secondary:active:hover {
+            color: #fff;
+            background-color: #fa0404;
+            border-color: #5cb85c;
+            outline: none;
+            box-shadow: none;
+        }
+
+
+        .button_type {
+            font-size: .8rem;
+            font-family: 'Unica One', cursive;
+            letter-spacing: .03rem;
+        }
+
+        /* TOPIC BUTTON AREA STYLES ABOVE */
+
+        /* FOOTER STYLES BELOW */
+
+        #giphylogo {
+            position: fixed;
+            bottom: 7px;
+            right: 5px;
+            width: 120px;
+        }
+
+        #signature {
+            color: #666;
+            font-size: .5rem;
+            position: fixed;
+            margin: 0;
+            bottom: 12px;
+            left: 12px;
+        }
+
+        #foot_contain {
+            position: fixed;
+            bottom: 0;
+            height: 36px;
+            background-color: rgba(0, 0, 0, 1);
+        }
+
+        /* FOOTER STYLES ABOVE */
+
+        /* MEDIA QUERIES BELOW */
+
+        /* Extra small devices (phones, 575px and down) */
+        @media only screen and (max-width: 575px) {
+
+            #gif_contain {
+                width: 60%;
+                }
+
+             } 
+             
+        /* Small devices (portrait tablets and large phones, 576px and up) */
+        @media only screen and (min-width: 576px) {
+
+            #gif_contain {
+                width: 70%;
+                }
+
+            .card-columns {
+                column-count: 2;
+                }
+
+             } 
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (min-width: 768px) {
+
+                #giphylogo {
+                    bottom: 8px;
+                    right: 10px;
+                    width: 150px;
+                }
+
+                #signature {
+                    font-size: .7rem;
+                    bottom: 15px;
+                    left: 15px;
+                }
+
+                #foot_contain {
+                    height: 46px;
+                }
+            
+             } 
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media only screen and (min-width: 992px) {
+
+            #gif_contain {
+                width: 80%;
+                }
+
+            .card-columns {
+                column-count: 3;
+                }
+
+             }
+        /* MEDIA QUERIES ABOVE */
+
+    </style>
+
+</head>
+
+<body>
+
+    <header id="head_contain" class="container-fluid">
+        <p id="logotype">GIF.HORSE</p>
+        <i id="plus" class="fas fa-plus"></i>
+        <i id="minus" class="fas fa-minus"></i>
+    </header>
+
+    <section id="input_contain" class="container-fluid">
+        <div id="input_box" class="input-group input-group-sm mb-3">
+            <input id="addit_data" type="text" class="form-control" placeholder="make new category">
+            <div class="input-group-append">
+                <button id="addit_btn" class="btn btn-secondary" type="submit">add it!</button>
+            </div>
+        </div>
+    </section>
+
+    <main>
+
+        <article id="gif_contain" class="container-fluid">
+            <div id="card_contain" class="card-columns"></div>
+        </article>
+
+        <aside id="button_contain">
+        </aside>
+
+    </main>
+
+    <footer id="foot_contain" class="container-fluid">
+        <a href="https://giphy.com/" target="_blank"> <img id="giphylogo" src="assets/images/PoweredBy_200_Horizontal_Light-Backgrounds_With_Logo.gif" alt="Powered by GIPHY"></a>
+        <a href="https://www.richtrevillian.com/" target="_blank" id="signature">DESIGN+DEV © 2018 RICH TREVILLIAN</a>
+    </footer>
+
+
+
+    <script>
+        // GIF.HORSE
+        // API and AJAX single page app, powered by GIPHY
+        // © Richard Trevillian, 2018-09-13
+        // University of Richmond, Full Stack Web Development Bootcamp
+        // JavaScript and jQuery
+
+        // START jQUERY FUNCTION
+        // ----------------------------------------------------------------
+
+        $(document).ready(function () {
+
+
+            // ----------------------------------------------------------------
+
+
+            // Array to hold the display names (with spaces, U&lc) of each topic button
+            let topicsArray = [
+                "Siberian Husky",
+                "Pangolin",
+                "Honey Badger",
+                "Shiba Inu",
+                "Ferret",
+                "Echidna",
+                "Bunny"
+            ];
+
+            // intialized globally, so various functions and variables can change it or access it
+            let currentTopic = "";
+
+            // set the number of images returned on a topic button push
+            let numberOfImagesReturned = 3;
+
+
+            // ----------------------------------------------------------------
+
+
+            // CREATE TOPIC BUTTONS FOR ALL ELEMENTS IN topicsArray
+            function makeButtons() {
+
+                // clear out all existing buttons before repopulating the list
+                $("#button_contain").html("");
+
+                // used in FOR loop below to convert names in topicsArray to URL format for button IDs
+                let topicFormatter = function (topicName) {
+
+                    // convert passed-in name to lower case
+                    let topicLowerCase = topicName.toLowerCase();
+
+                    // then take the lower-cased name and replace any spaces with +
+                    let topicPlussed = topicLowerCase.replace(" ", "+");
+
+                    // and return the lower-cased and plussed name as the value of topicFormatter()
+                    return topicPlussed;
+                };
+
+                // loop through all elements in topicsArray
+                for (let i = 0; i < topicsArray.length; i++) {
+
+                    // variable stands for the current looped topic unformatted name (button innerText)
+                    const subjectName = topicsArray[i];
+
+                    // variable stands for the current looped topic formatted name (button ID)
+                    const subjectID = topicFormatter(subjectName);
+
+                    // create a button with loop item's innerText and ID
+                    let buttonTemplate = function () {
+
+                        // Template Literal to create a button and .prepend it to #button_contain <aside>
+                        $("#button_contain").prepend(`
+                            <button type="button" id="${subjectID}" class="topic_button btn btn-secondary btn-sm">
+                                <span class="button_type">${subjectName}</span>
+                            </button>
+                        `);
+                    };
+
+                    // call buttonTemplate() on each loop to create a button for a topic name from topicsArray
+                    buttonTemplate();
+                }
+            };
+
+
+            // WHEN PAGE LOADS OR RELOADS, BUILD A LIST OF THE DEFAULT TOPIC BUTTONS
+            makeButtons();
+
+
+            // ----------------------------------------------------------------
+
+
+            // CALLBACK FOR THE AJAX PROMISE
+            let makeCard = function (response) {
+
+                // holds the entire object returned by the ajax call
+                const imageObject = response.data;
+
+                // creates a card for each gif returned by ajax call
+                let cardTemplate = function () {
+                    // Template Literal to create a Boostrap card for each image and prepend it to #card_contain DIV
+                    $("#card_contain").prepend(`
+                            <div class="card">
+                                <img class="card-img-top gif" 
+                                    src="${imageObject.images.original_still.url}" 
+                                    data-still="${imageObject.images.original_still.url}" 
+                                    data-animate="${imageObject.images.downsized.url}" 
+                                    data-state="still">
+                                <ul class="list-group list-group-flush">
+                                    <li class="gif_title list-group-item">
+                                        <span class="title">${imageObject.title}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        `);
+
+                    // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THE TOGGLE HANDLER ON ODD-NUMBERED CARDS!!??
+                    $(".card-img-top").on("click", function () {
+
+                        // variable to stand for the data-state attribute of the image clicked on
+                        var state = $(this).attr("data-state");
+
+                        // if data-state is ANIMATE, then...
+                        if (state === "animate") {
+                            // change the img's data-state="" to "still"
+                            $(this).attr("data-state", "still");
+                            // change the img's src="" to the value of the data-still="" attribute
+                            $(this).attr("src", $(this).attr("data-still"));
+
+                        } else if (state === "still") {
+                            // change the img's data-state="" value to "animate"
+                            $(this).attr("data-state", "animate");
+                            // change the src="" to the value of the img's data-animate="" attribute
+                            $(this).attr("src", $(this).attr("data-animate"));
+                        }
+                    });
+
+                };
+
+                // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THE TOGGLE HANDLER ON EVEN-NUMBERED CARDS!!??
+                $(".card-img-top").on("click", function () {
+
+                    // variable to stand for the data-state attribute of the image clicked on
+                    var state = $(this).attr("data-state");
+
+                    // if data-state is ANIMATE, then...
+                    if (state === "animate") {
+                        // change the img's data-state="" to "still"
+                        $(this).attr("data-state", "still");
+                        // change the img's src="" to the value of the data-still="" attribute
+                        $(this).attr("src", $(this).attr("data-still"));
+
+                    } else if (state === "still") {
+                        // change the img's data-state="" value to "animate"
+                        $(this).attr("data-state", "animate");
+                        // change the src="" to the value of the img's data-animate="" attribute
+                        $(this).attr("src", $(this).attr("data-animate"));
+                    }
+                });
+
+                // calls cardTemplate once each loop to create a button for that looped topic
+                cardTemplate();
+
+            };
+
+
+            // ----------------------------------------------------------------
+
+
+            // DEFINE MAKE NEW BUTTON FUNCTION, USED BY "ADD IT!" BUTTON and RETURN BUTTON EVENT HANDLERS
+            let makeNewButton = function () {
+
+                // variable to hold text entered in the "make new category" input field
+                let newButtonName = $("#addit_data").val();
+
+                // .push the new button name to the end of the topicsArray
+                topicsArray.push(newButtonName);
+
+                // refresh list of all buttons on page by calling makeButtons()
+                makeButtons();
+
+                // clear the just submitted value out of the field and reset
+                $("#addit_data").val("");
+
+                // DUPLICATE CODE: ADD EVENT HANDLER TO THE NEWLY CREATED BUTTON
+                // when a topic button is pressed, load initial batch of images matching the button's ID
+                $(".topic_button").on("click", function () {
+
+                    // clear out all current gifs before getting a new batch
+                    $("#card_contain").html("");
+
+                    // variable to hold the ID of any .topic_button clicked on
+                    let buttonTopic = $(this).attr("id");
+
+                    // set the currentTopic var's value as value of buttonTopic
+                    // so the PLUS button below knows what topic to grab more images for
+                    currentTopic = buttonTopic;
+
+                    // using Trilogy's production key; personal beta key was constantly being restricted
+                    let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&rating=G&tag=" + currentTopic + "";
+
+                    // run as many loops as the value of variable numberOfImagesReturned
+                    for (let k = 0; k < numberOfImagesReturned; k++) {
+
+                        // make a call for an image
+                        $.ajax({
+                                url: queryURL,
+                                method: "GET"
+                            })
+                            .then(function (response) {
+                                // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                                makeCard(response);
+                            });
+                    };
+                });
+            };
+
+
+            // MAKE A NEW CATEGORY BUTTON FUNCTION WITH INPUT'S ADD IT BUTTON
+            $("#addit_btn").on("click", function () {
+                // making sure that there is data in the field so no blank buttons are created
+                if ($("#addit_data").val() !== "") {
+                    // call makeNewButton to make a new button when return is pressed
+                    makeNewButton();
+                }
+            });
+
+
+            // MAKE A NEW CATEGORY BUTTON FUNCTION ENTER/RETURN KEY PRESS
+            $(document).keypress(function (e) {
+                // listening for the Enter/Return keypress (key 13)
+                // and also making sure that there is data in the field so no blank buttons are created
+                if (e.which === 13 && $("#addit_data").val() !== "") {
+                    // call makeNewButton to make a new button when return is pressed
+                    makeNewButton();
+                }
+            });
+
+
+            // ----------------------------------------------------------------
+
+
+            // LOAD A FRESH BATCH OF RANDOM GIFS WHEN A TOPIC BUTTON IS PRESSED
+            $(".topic_button").on("click", function () {
+
+                // clear out all current gifs before getting a new batch
+                $("#card_contain").html("");
+
+                // variable to hold the ID of any .topic_button clicked on
+                let buttonTopic = $(this).attr("id");
+
+                // set the currentTopic var's value as value of buttonTopic
+                // so the PLUS button below knows what topic to grab more images for
+                currentTopic = buttonTopic;
+
+                // using Trilogy's production key; personal beta key was constantly being restricted
+                let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&rating=G&tag=" + currentTopic + "";
+
+                // run as many loops as the value of variable numberOfImagesReturned
+                for (let k = 0; k < numberOfImagesReturned; k++) {
+
+                    // make a call for an image
+                    $.ajax({
+                            url: queryURL,
+                            method: "GET"
+                        })
+                        .then(function (response) {
+                            // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                            makeCard(response);
+                        });
+                };
+            });
+
+
+            // ----------------------------------------------------------------
+
+
+            // PLUS BUTTON ADDS ONE MORE IMAGE OF CURRENT SUBJECT
+            $("#plus").on("click", function () {
+
+                // using Trilogy's production key; personal beta key was constantly being restricted
+                let queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&rating=G&tag=" + currentTopic + "";
+
+                // make a call for an image
+                $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    })
+                    .then(function (response) {
+                        // build a Bootstrap card with a Template Literal and attach a click Event Handler
+                        makeCard(response);
+                    });
+            });
+
+
+            // ----------------------------------------------------------------
+
+
+            // CLICKING ON PAGE HEADER LOGO RELOADS PAGE TO BLANK
+            $("#minus").on("click", function () {
+
+                window.location.reload(true);
+            });
+
+
+            // END jQUERY FUNCTION
+        });
+        // ----------------------------------------------------------------
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="assets/scripts/javascript.js"></script>
+
+
+</body>
+
+</html>
+
+<!-- GIF.HORSE
+API and AJAX single page app, powered by GIPHY
+© Richard Trevillian, 2018-09-13
+University of Richmond, Full Stack Web Development Bootcamp
+JavaScript and jQuery -->
