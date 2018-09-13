@@ -319,7 +319,7 @@
             let queryURL = "";
 
             // variable for controlling the number of images returned per ajax batch call
-            let numberOfImagesReturned = 4;
+            let numberOfImagesReturned = 3;
 
 
             // function to convert a topic name to lowercase, and replace spaces with +
@@ -366,56 +366,78 @@
             // this is the callback function called by the AJAX .then promise handler
             let makeCardBatch = function (response) {
 
-                // loop through each object in the JSON object's "data" array
-                for (let j = 0; j < response.data.length; j++) {
+                // imageObject holds each individual image's object from the "data" array
+                // const imageObject = response.data[j];
+                const imageObject = response.data;
 
-                    // imageObject holds each individual image's object from the "data" array
-                    const imageObject = response.data[j];
-
-                    // function to create a card for each
-                    let cardTemplate = function () {
-                        // Template Literal to create a Boostrap card for each image and prepend it to #card_contain DIV
-                        $("#card_contain").prepend(`
+                // function to create a card for each
+                let cardTemplate = function () {
+                    // Template Literal to create a Boostrap card for each image and prepend it to #card_contain DIV
+                    $("#card_contain").append(`
                             <div class="card">
-                                <img class="card-img-top" src="${imageObject.images.original_still.url}" data-still="${imageObject.images.original_still.url}" data-animate="${imageObject.images.original.url}" data-state="still" class="gif">
+                                <img class="card-img-top gif" 
+                                    src="${imageObject.images.original_still.url}" 
+                                    data-still="${imageObject.images.original_still.url}" 
+                                    data-animate="${imageObject.images.downsized.url}" 
+                                    data-state="still">
                                 <ul class="list-group list-group-flush">
                                     <li class="gif_title list-group-item">
                                         <span class="title">${imageObject.title}</span>
-                                        <span class="rating">${imageObject.rating}</span>
                                     </li>
                                 </ul>
                             </div>
                         `);
-                    };
-                    // calls cardTemplate once each loop to create a button for that looped topic
-                    cardTemplate();
-                }
 
+                    // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THIS HANDLER ON ODD-NUMBERED CARDS!!??
+                    // EVENT HANDLERS FOR TEMPLATE LITERAL CONSTRUCTIONS HAVE TO COME AFTER THEM
+                    $(".card-img-top").on("click", function () {
+
+                        // variable state to stand for the data-state attribute of the image clicked on
+                        var state = $(this).attr("data-state");
+
+                        if (state === "animate") {
+                            // and change the img's data-state="" to "still"
+                            $(this).attr("data-state", "still");
+                            // then change the img's src="" to the value of the data-still="" attribute
+                            $(this).attr("src", $(this).attr("data-still"));
+
+                        } else if (state === "still") {
+                            // and change the img's data-state="" value to "animate"
+                            $(this).attr("data-state", "animate");
+                            // change the src="" to the value of the img's data-animate="" attribute
+                            $(this).attr("src", $(this).attr("data-animate"));
+                        }
+
+                    });
+
+                };
+
+                // !!?? WEIRDNESS: THIS BLOCK ONLY PUTS THIS HANDLER ON EVEN-NUMBERED CARDS!!??
                 // EVENT HANDLERS FOR TEMPLATE LITERAL CONSTRUCTIONS HAVE TO COME AFTER THEM
                 $(".card-img-top").on("click", function () {
 
                     // variable state to stand for the data-state attribute of the image clicked on
                     var state = $(this).attr("data-state");
 
-                    // if data-state="still",
-                    if (state === "still") {
-                        // change the src="" to the value of the img's data-animate="" attribute
-                        $(this).attr("src", $(this).attr("data-animate"));
-                        // and change the img's data-state="" value to "animate"
-                        $(this).attr("data-state", "animate");
-
-                        // otherwise (if data-state is NOT "still"... i.e., it is "animate")
-                    } else {
-                        // then change the img's src="" to the value of the data-still="" attribute
-                        $(this).attr("src", $(this).attr("data-still"));
+                    if (state === "animate") {
                         // and change the img's data-state="" to "still"
                         $(this).attr("data-state", "still");
+                        // then change the img's src="" to the value of the data-still="" attribute
+                        $(this).attr("src", $(this).attr("data-still"));
+
+                    } else if (state === "still") {
+                        // and change the img's data-state="" value to "animate"
+                        $(this).attr("data-state", "animate");
+                        // change the src="" to the value of the img's data-animate="" attribute
+                        $(this).attr("src", $(this).attr("data-animate"));
                     }
 
-                    // and give us some monkey butts
-                    console.log("monkey butts");
-
                 });
+
+                // calls cardTemplate once each loop to create a button for that looped topic
+                cardTemplate();
+                // }
+
             };
 
 
@@ -442,7 +464,7 @@
                 // when a topic button is pressed, load initial batch of images matching the button's ID
                 $(".topic_button").on("click", function () {
 
-                    numberOfImagesReturned = 4;
+                    numberOfImagesReturned = 3;
 
                     $("#card_contain").html("");
 
@@ -458,25 +480,30 @@
                     // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
 
                     // using my beta API key; GIPHY IS SUPER-RESTRICTIVE ABOUT THE REQUESTS IT ALLOWS WITH THIS
-                    // queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=" + numberOfImagesReturned + "";
+                    // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&tag=" + currentTopic + "&rating=G";
 
-                    // using Trilogy's production API key
-                    queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=dc6zaTOxFJmzC&rating=G&limit=" + numberOfImagesReturned + "";
+                    // getting a random image template
+                    queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
-                    // do a jQuery AJAX call on the constructed queryURL for the button clicked
-                    $.ajax({
-                            url: queryURL,
-                            method: "GET"
-                        })
 
-                        // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
-                        .then(function (response) {
+                    for (let k = 0; k < numberOfImagesReturned; k++) {
 
-                            makeCardBatch(response);
+                        // const element = k;
 
-                            console.log(response);
+                        // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                        $.ajax({
+                                url: queryURL,
+                                method: "GET"
+                            })
 
-                        });
+                            // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
+                            .then(function (response) {
+
+                                makeCardBatch(response);
+
+                            });
+                    }
+
                 });
             };
 
@@ -511,7 +538,7 @@
             // when a topic button is pressed, load initial batch of images matching the button's ID
             $(".topic_button").on("click", function () {
 
-                numberOfImagesReturned = 4;
+                numberOfImagesReturned = 3;
 
                 $("#card_contain").html("");
 
@@ -527,40 +554,29 @@
                 // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
 
                 // using my beta API key; GIPHY IS SUPER-RESTRICTIVE ABOUT THE REQUESTS IT ALLOWS WITH THIS
-                // queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=" + numberOfImagesReturned + "";
+                // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&tag=" + currentTopic + "&rating=G";
 
-                // using Trilogy's production API key
-                queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=dc6zaTOxFJmzC&rating=G&limit=" + numberOfImagesReturned + "";
-
-
+                // getting a random image template
+                queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
 
+                for (let k = 0; k < numberOfImagesReturned; k++) {
 
+                    // const element = k;
 
+                    // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                    $.ajax({
+                            url: queryURL,
+                            method: "GET"
+                        })
 
+                        // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
+                        .then(function (response) {
 
-                // using Triolgy's Production API key
-                // queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=dc6zaTOxFJmzC&rating=PG-13&limit=10";
+                            makeCardBatch(response);
 
-                // using Triolgy's Production API key
-                // queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
-
-
-
-                // do a jQuery AJAX call on the constructed queryURL for the button clicked
-                $.ajax({
-                        url: queryURL,
-                        method: "GET"
-                    })
-
-                    // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
-                    .then(function (response) {
-
-                        makeCardBatch(response);
-
-                        console.log(response);
-
-                    });
+                        });
+                }
 
             });
 
@@ -572,31 +588,26 @@
 
             $("#plus").on("click", function () {
 
-                $("#card_contain").html("");
+                // getting a random image template
+                queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + currentTopic + "&rating=G";
 
-                numberOfImagesReturned++
+                // for (let k = 0; k < numberOfImagesReturned; k++) {
 
-                // construct the URL to retreive a batch of images matching the button's ID
-                // MPAA-style ratings Y, G, PG, PG-13 and R
-                // endpoints: gifs/ or stickers/ : search, trending, translate, random, {gif_id},
+                    // const element = k;
 
-                // using my beta API key; GIPHY IS SUPER-RESTRICTIVE ABOUT THE REQUESTS IT ALLOWS WITH THIS
-                // queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=vzV2CVS8vByVpMEaCF9eeWDPq5F7ZDGH&rating=G&limit=" + numberOfImagesReturned + "";
+                    // do a jQuery AJAX call on the constructed queryURL for the button clicked
+                    $.ajax({
+                            url: queryURL,
+                            method: "GET"
+                        })
 
-                // using Trilogy's production API key
-                queryURL = "http://api.giphy.com/v1/gifs/search?q=" + currentTopic + "&api_key=dc6zaTOxFJmzC&rating=G&limit=" + numberOfImagesReturned + "";
+                        // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
+                        .then(function (response) {
 
-                // do a jQuery AJAX call on the constructed queryURL for the button clicked
-                $.ajax({
-                        url: queryURL,
-                        method: "GET"
-                    })
+                            makeCardBatch(response);
 
-                    // when GIPHY returns a JSON object containing a "data" array of image objects .then ...
-                    .then(function (response) {
-
-                        makeCardBatch(response);
-                    });
+                        });
+                // }
             });
 
             // FUNCTIONALITY OF ADD ANOTHER BATCH OF SAME TOPIC ABOVE
