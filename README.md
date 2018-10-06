@@ -17,9 +17,9 @@ Choosing a new subject category will also clear all current images and replace t
 - Click on the POWERED BY GIPHY logo to visit the Fountain of All Gifs.
 - Click on DESIGN+DEV © 2018 RICH TREVILLIAN to see more of my design and development work.
 
-[get your gif on: https://landrumtrev.github.io/GIF.HORSE-APIsAJAX/](https://landrumtrev.github.io/GIF.HORSE-APIsAJAX/)
+[get your gif on: https://landrumtrev.github.io/GIF.HORSE/](https://landrumtrev.github.io/GIF.HORSE/)
 
-[source: https://github.com/LandrumTrev/GIF.HORSE-APIsAJAX](https://github.com/LandrumTrev/GIF.HORSE-APIsAJAX)
+[source: https://github.com/LandrumTrev/GIF.HORSE](https://github.com/LandrumTrev/GIF.HORSE)
 
 ###### ©2018 Richard Trevillian
 ###### powered by GIPHY
