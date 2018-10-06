@@ -4,14 +4,13 @@
 // University of Richmond, Full Stack Web Development Bootcamp
 // JavaScript and jQuery
 
+
 // START jQUERY FUNCTION
 // ----------------------------------------------------------------
 
 $(document).ready(function () {
 
-
     // ----------------------------------------------------------------
-
 
     // Array to hold the display names (with spaces, U&lc) of each topic button
     let topicsArray = [
@@ -39,7 +38,6 @@ $(document).ready(function () {
 
     // set the number of images returned on a topic button push
     let numberOfImagesReturned = 3;
-
 
     // ----------------------------------------------------------------
 
@@ -169,7 +167,6 @@ $(document).ready(function () {
 
     };
 
-
     // ----------------------------------------------------------------
 
 
@@ -242,7 +239,6 @@ $(document).ready(function () {
         }
     });
 
-
     // ----------------------------------------------------------------
 
 
@@ -277,7 +273,6 @@ $(document).ready(function () {
         };
     });
 
-
     // ----------------------------------------------------------------
 
 
@@ -298,7 +293,6 @@ $(document).ready(function () {
             });
     });
 
-
     // ----------------------------------------------------------------
 
 
@@ -307,7 +301,6 @@ $(document).ready(function () {
 
         window.location.reload(true);
     });
-
 
     // END jQUERY FUNCTION
 });
