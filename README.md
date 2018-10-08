@@ -1,7 +1,7 @@
 # GIF.HORSE
 ##### Category-specific random animated GIF viewer
 
-JavaScript, jQuery, CSS, HTML, Bootstrap, Google Fonts, Font Awesome, GitHub, responsive web design (RWD), AJAX/async. Retrieves async data via AJAX from GIPHY.com API and manipulates DOM. Responsive web design.
+JavaScript, jQuery, CSS, HTML, Bootstrap, Google Fonts, Font Awesome, GitHub, responsive web design (RWD), AJAX/async. Retrieves async data via AJAX from GIPHY.com API and manipulates DOM.
 
 Clicking a pre-defined subject from the right-side button column will load a randomized group of three still images of animated .gifs from GIPHY. Clicking the same button again clears those three images and loads a new randomized set of three stills. Clicking on a still activates its animation, and clicking on it again stops the animation.
 
